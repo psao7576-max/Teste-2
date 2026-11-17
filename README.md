@@ -1,11 +1,14 @@
 local Lighting = game:GetService("Lighting")
 local Terrain = workspace.Terrain
 
+-- Mude para true se quiser tirar também as partículas (mais FPS, mas você enxerga menos os golpes)
 local REMOVER_PARTICULAS = true
 
 pcall(function()
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 end)
+
+-- Iluminação
 Lighting.GlobalShadows = false
 Lighting.FogEnd = 9e9
 Lighting.Brightness = 1
@@ -18,6 +21,7 @@ for _, v in ipairs(Lighting:GetChildren()) do
     end
 end
 
+-- Água
 pcall(function()
     Terrain.WaterWaveSize = 0
     Terrain.WaterWaveSpeed = 0
@@ -25,6 +29,7 @@ pcall(function()
     Terrain.WaterTransparency = 1
 end)
 
+-- Otimiza cada objeto
 local function otimizar(obj)
     pcall(function()
         if obj:IsA("BasePart") then
@@ -44,4 +49,5 @@ for _, obj in ipairs(workspace:GetDescendants()) do
     otimizar(obj)
 end
 
+-- Aplica também em coisas que aparecem depois
 workspace.DescendantAdded:Connect(otimizar)
